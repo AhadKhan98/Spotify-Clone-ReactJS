@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 
 import Login from './Login';
@@ -29,13 +29,10 @@ function App() {
     }
   }, []);
 
-  console.log('USER>>>',user);
-  console.log('TOKEN>>>', token);
-
   return (
 
     <div className="app">
-      { token ? <Player /> : <Login /> }
+      { token ? <Player spotify={spotifyAPI} /> : <Login /> }
     </div>
   );
 }
