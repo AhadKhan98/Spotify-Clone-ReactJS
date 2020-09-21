@@ -3,6 +3,7 @@ import React from 'react'
 import './Player.css';
 import Sidebar from './Sidebar';
 import Body from './Body';
+import Footer from './Footer';
 
 function Player() {
     return (
@@ -10,6 +11,7 @@ function Player() {
             <div className="player__body">
                 <Sidebar />
                 <Body />
+                <Footer />
             </div>
         </div>
     )
