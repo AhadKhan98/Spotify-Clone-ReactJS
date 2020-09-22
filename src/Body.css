@@ -3,6 +3,7 @@
     height: 100vh;
     color: white;
     padding: 30px;
+    overflow-y: overlay;
     background: linear-gradient(rgb(91, 87, 115), rgb(0, 0, 0, 1));
 }
 
@@ -29,4 +30,29 @@
 
 .body__infoText > p {
     font-size: 14px;
+}
+
+.body__icons {
+    display: flex;
+    align-items: center;
+}
+
+.body__icons > .MuiSvgIcon-root {
+    margin-right: 20px;
+}
+
+.body__icons > .body__shuffle {
+    font-size: 80px !important;
+    margin-left: 50px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.body__shuffle:hover {
+    transition: 100ms transform ease-in;
+    transform: scale(1.08);
+}
+
+.body__songs {
+    margin: 20px -30px; 
 }
