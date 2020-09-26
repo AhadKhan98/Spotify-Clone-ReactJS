@@ -1,18 +1,70 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 
 import './Body.css';
 
 import Header from './Header';
 
 import {useDataLayerValue} from './DataLayer';
-import { Favorite, MoreHoriz, PlayCircleFilled } from '@material-ui/icons';
+import { Favorite, MoreHoriz, PlayCircleFilled, PauseCircleFilled } from '@material-ui/icons';
 
 import SongRow from './SongRow';
 
 function Body() {
 
-    const [{featured_playlist}, dispatch] = useDataLayerValue();
-    console.log('FEATURED PLAYLIST!!!!', featured_playlist)
+    const [{ playing,featured_playlist, spotify}, dispatch] = useDataLayerValue();
+
+    useEffect(() => {
+        console.log('PLAYLIST CHANGED BY CLICK', featured_playlist)
+    }, [featured_playlist]);
+
+    const pausePlaying = () => {
+        spotify.pause();
+        dispatch({
+            type: 'SET_PLAYING',
+            playing: false,
+        });
+    }
+    const playPlaylist = (id) => {
+        spotify
+          .play({
+            context_uri: `spotify:playlist:${featured_playlist.id}`,
+          })
+          .then(() => {
+            spotify.getMyCurrentPlayingTrack().then((r) => {
+              dispatch({
+                type: "SET_CURRENT_SONG",
+                current_song: r.item,
+              });
+              dispatch({
+                type: "SET_PLAYING",
+                playing: true,
+              });
+            });
+          });
+      };
+    
+      const playSong = (id) => {
+          console.log('ITEMID', id);
+        spotify
+          .play({
+            uris: [`spotify:track:${id}`],
+          })
+          .then((res) => {
+            spotify.getMyCurrentPlayingTrack().then((r) => {
+              dispatch({
+                type: "SET_CURRENT_SONG",
+                current_song: r.item,
+              });
+              dispatch({
+                type: "SET_PLAYING",
+                playing: true,
+              });
+            });
+          });
+      };
+
+    
+    // console.log('FEATURED PLAYLIST!!!!', featured_playlist)
     return (
         <div className="body">
             <Header />
@@ -27,18 +79,21 @@ function Body() {
 
             <div className="body__songs">
                 <div className="body__icons">
-                    <PlayCircleFilled className="body__shuffle" />
+                    { playing ? (
+                        <PauseCircleFilled onClick={pausePlaying} className="body__shuffle" />
+                    ):(
+                        <PlayCircleFilled onClick={playPlaylist} className="body__shuffle" />
+                    ) }
+                    
                     <Favorite fontSize="large" />
                     <MoreHoriz /> 
                 </div>
-                
-                {featured_playlist?.tracks?.items.map(item => (
-                    <SongRow track={item.track} />
+                {console.log(featured_playlist?.tracks?.items[0])}
+                {featured_playlist?.tracks?.items?.map(item => (
+                    
+                    <SongRow track={item.track} onClick={() => (playSong(item.track.id))}/>
                 ))}
-
-                
-
-                
+  
             </div>
 
         </div>

@@ -11,7 +11,17 @@ import { useDataLayerValue } from './DataLayer';
 
 function Sidebar() {
 
-    const [{ playlists }, dispatch] = useDataLayerValue();
+    const [{ spotify ,playlists }, dispatch] = useDataLayerValue();
+
+    const handlerFeaturedPlaylist = (playlist) => {
+        spotify.getPlaylist(playlist.id).then(pl => {
+            dispatch({
+                type: 'SET_FEATURED_PLAYLIST',
+                featured_playlist: pl,
+            });
+        })  
+        
+    };
 
     return (
         <div className="sidebar">
@@ -24,7 +34,7 @@ function Sidebar() {
             <hr />
             
             {playlists?.items?.map((playlist) => (
-                <SidebarOption title={playlist.name} />
+                <SidebarOption title={playlist.name} onClick={() => (handlerFeaturedPlaylist(playlist))}/>
             ))}
 
         </div>

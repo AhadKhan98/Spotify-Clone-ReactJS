@@ -31,7 +31,6 @@ function App() {
 
       spotifyAPI.getUserPlaylists().then(playlists => {
         dispatch({ type:'SET_PLAYLISTS', playlists })
-        console.log('FEATURED PLAYLIST: ', playlists.items[0].id)
         spotifyAPI.getPlaylist(playlists.items[0].id).then(playlist => {
           dispatch({ type:'SET_FEATURED_PLAYLIST', featured_playlist:playlist })
         })
