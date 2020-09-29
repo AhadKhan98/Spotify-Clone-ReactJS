@@ -9,11 +9,23 @@
     width: 50%;
 }
 
-.login a {
+.login > a {
     padding: 20px;
     background-color: #1db954;
     border-radius: 99px;
     font-weight: 800;
     color: white;
     text-decoration: none;
+}
+
+.login p {
+    color: white;
+}
+
+.login p > a {
+    color: white;
+}
+
+.instructions {
+    font-size: 80%;
 }
